@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step 5 - Summary | KOLSS Kitchen Estimator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(214.3 31.8% 91.4%)",
+                        input: "hsl(214.3 31.8% 91.4%)",
+                        ring: "hsl(222.2 84% 4.9%)",
+                        background: "hsl(0 0% 100%)",
+                        foreground: "hsl(222.2 84% 4.9%)",
+                        primary: {
+                            DEFAULT: "hsl(222.2 47.4% 11.2%)",
+                            foreground: "hsl(210 40% 98%)",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(210 40% 96.1%)",
+                            foreground: "hsl(222.2 47.4% 11.2%)",
+                        },
+                        muted: {
+                            DEFAULT: "hsl(210 40% 96.1%)",
+                            foreground: "hsl(215.4 16.3% 46.9%)",
+                        },
+                        card: {
+                            DEFAULT: "hsl(0 0% 100%)",
+                            foreground: "hsl(222.2 84% 4.9%)",
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-10">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <h1 class="text-xl md:text-2xl font-bold text-slate-900">KOLSS Premium Kitchen Estimator</h1>
+
+                <!-- Step Indicator -->
+                <div class="flex items-center gap-2 text-sm">
+                    <span class="font-medium text-slate-900">Step 5</span>
+                    <span class="text-slate-400">of 7</span>
+                </div>
+
+                <!-- Currency Toggle -->
+                <div class="inline-flex items-center rounded-md border border-slate-200 bg-white p-1">
+                    <button class="inline-flex items-center justify-center rounded-sm px-3 py-1.5 text-sm font-medium bg-slate-900 text-white">EUR</button>
+                    <button class="inline-flex items-center justify-center rounded-sm px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100">PLN</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 container mx-auto px-4 py-8 max-w-4xl">
+        <div class="space-y-6">
+            <!-- Page Title -->
+            <div class="space-y-2">
+                <h2 class="text-3xl font-bold tracking-tight text-slate-900">Your Estimate</h2>
+                <p class="text-slate-500">Review your selected options.</p>
+            </div>
+
+            <!-- Summary Card -->
+            <div class="rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+                <!-- Kitchen Configuration -->
+                <div class="p-6 border-b border-slate-200">
+                    <h3 class="text-lg font-semibold text-slate-900 mb-4">Kitchen Configuration</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-slate-600">Size</span>
+                            <span class="font-medium text-slate-900">5.5 sq.m</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-slate-600">Layout</span>
+                            <span class="font-medium text-slate-900">L-Shape (+5%)</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-slate-600">Kitchen Island</span>
+                            <span class="font-medium text-slate-900">800 EUR</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-slate-600">Furniture Hardware</span>
+                            <span class="font-medium text-slate-900">Blum (Included)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Finishes -->
+                <div class="p-6 border-b border-slate-200 bg-slate-50">
+                    <h3 class="text-lg font-semibold text-slate-900 mb-4">Finishes</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-slate-600">Facade Material</span>
+                            <span class="font-medium text-slate-900">LDSP Painted</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-slate-600">Facade Series</span>
+                            <span class="font-medium text-slate-900">Light Series</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-slate-600">Handle Type</span>
+                            <span class="font-medium text-slate-900">Surface Handles</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-slate-600">Worktop</span>
+                            <span class="font-medium text-slate-900">Laminate (100 EUR/sq.m)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Services -->
+                <div class="p-6 border-b border-slate-200">
+                    <h3 class="text-lg font-semibold text-slate-900 mb-4">Additional Services</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-slate-600">Plumbing & Sink</span>
+                            <span class="font-medium text-slate-900">500 EUR</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-slate-600">Electrical Appliances</span>
+                            <span class="font-medium text-slate-900">Not selected</span>
+                        </div>
+                        <div class="flex justify-between items-center py-2">
+                            <span class="text-slate-600">Kitchen Assembly</span>
+                            <span class="font-medium text-slate-900">550 EUR (100 EUR/sq.m)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total -->
+                <div class="p-6 bg-slate-900">
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <div class="text-slate-400 text-sm mb-1">Total Estimate</div>
+                            <div class="text-3xl font-bold text-white">5,175 EUR</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-slate-400 text-xs mb-1">Approx. in PLN</div>
+                            <div class="text-xl font-semibold text-slate-300">23,950 PLN</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Banner -->
+            <div class="rounded-lg border border-blue-200 bg-blue-50 p-4">
+                <div class="flex gap-3">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="text-sm text-blue-900">
+                        <p class="font-medium">Important Note</p>
+                        <p class="text-blue-700 mt-1">This is a preliminary estimate. Final pricing will be provided by our design team after consultation and may vary based on specific requirements and site conditions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 sticky bottom-0">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <!-- Action Buttons -->
+                <div class="flex gap-3 md:ml-auto">
+                    <button class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-slate-200 bg-white hover:bg-slate-100 h-10 px-4 py-2">
+                        Back
+                    </button>
+                    <button class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-slate-900 text-white hover:bg-slate-900/90 h-10 px-8 py-2">
+                        Refine final offer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

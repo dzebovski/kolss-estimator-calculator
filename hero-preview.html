@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KOLSS Kitchen Estimator - Hero Section</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(to bottom right, #ffffff, #f8fafc);
+        }
+    </style>
+</head>
+<body class="hero-gradient">
+    <section class="container mx-auto px-4 py-20">
+        <div class="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
+            <!-- Left Content -->
+            <div class="space-y-8">
+                <div class="space-y-4">
+                    <h1 class="text-5xl lg:text-6xl font-bold tracking-tight text-slate-900">
+                        Get Your Kitchen Estimate
+                        <span class="text-slate-600">Instantly</span>
+                    </h1>
+                    <p class="text-xl text-slate-600 leading-relaxed max-w-lg">
+                        Plan your dream kitchen with precision. Our intelligent calculator provides accurate pricing for premium KOLSS furniture in seconds.
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-slate-900 text-slate-50 hover:bg-slate-900/90 h-11 px-8">
+                        Start Calculator
+                    </button>
+                    <button class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-slate-200 bg-white hover:bg-slate-100 hover:text-slate-900 h-11 px-8">
+                        View Examples
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-8 pt-4">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-slate-900">500+</div>
+                        <div class="text-sm text-slate-600">Projects Completed</div>
+                    </div>
+                    <div class="h-12 w-px bg-slate-200"></div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-slate-900">98%</div>
+                        <div class="text-sm text-slate-600">Customer Satisfaction</div>
+                    </div>
+                    <div class="h-12 w-px bg-slate-200"></div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-slate-900">24h</div>
+                        <div class="text-sm text-slate-600">Quote Delivery</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Image -->
+            <div class="relative">
+                <div class="aspect-square rounded-2xl bg-slate-100 border border-slate-200 shadow-2xl overflow-hidden">
+                    <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
+                        <div class="text-center space-y-4 p-8">
+                            <svg class="w-32 h-32 mx-auto text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3z"></path>
+                            </svg>
+                            <p class="text-slate-400 font-medium">Kitchen Layout Preview</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Floating Card -->
+                <div class="absolute bottom-8 -left-8 bg-white rounded-lg shadow-xl p-4 border border-slate-200 max-w-xs">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-sm font-semibold text-slate-900">Instant Calculation</div>
+                            <div class="text-xs text-slate-600">Real-time pricing</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

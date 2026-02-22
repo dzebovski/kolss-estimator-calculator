@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Step 7 - Thank You | KOLSS Kitchen Estimator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        border: "hsl(214.3 31.8% 91.4%)",
+                        input: "hsl(214.3 31.8% 91.4%)",
+                        ring: "hsl(222.2 84% 4.9%)",
+                        background: "hsl(0 0% 100%)",
+                        foreground: "hsl(222.2 84% 4.9%)",
+                        primary: {
+                            DEFAULT: "hsl(222.2 47.4% 11.2%)",
+                            foreground: "hsl(210 40% 98%)",
+                        },
+                        secondary: {
+                            DEFAULT: "hsl(210 40% 96.1%)",
+                            foreground: "hsl(222.2 47.4% 11.2%)",
+                        },
+                        muted: {
+                            DEFAULT: "hsl(210 40% 96.1%)",
+                            foreground: "hsl(215.4 16.3% 46.9%)",
+                        },
+                        card: {
+                            DEFAULT: "hsl(0 0% 100%)",
+                            foreground: "hsl(222.2 84% 4.9%)",
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <h1 class="text-xl md:text-2xl font-bold text-slate-900">KOLSS Premium Kitchen Estimator</h1>
+
+                <!-- Step Indicator -->
+                <div class="flex items-center gap-2 text-sm">
+                    <span class="font-medium text-slate-900">Step 7</span>
+                    <span class="text-slate-400">of 7</span>
+                </div>
+
+                <!-- Currency Toggle -->
+                <div class="inline-flex items-center rounded-md border border-slate-200 bg-white p-1">
+                    <button class="inline-flex items-center justify-center rounded-sm px-3 py-1.5 text-sm font-medium bg-slate-900 text-white">EUR</button>
+                    <button class="inline-flex items-center justify-center rounded-sm px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-100">PLN</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 container mx-auto px-4 py-16 max-w-3xl flex items-center justify-center">
+        <div class="w-full space-y-8 text-center">
+            <!-- Success Icon -->
+            <div class="flex justify-center">
+                <div class="rounded-full bg-green-100 p-6">
+                    <svg class="w-16 h-16 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Thank You Message -->
+            <div class="space-y-4">
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900">Thank you for your request!</h2>
+                <p class="text-xl text-slate-600 max-w-2xl mx-auto">Your estimate has been successfully sent. We will contact you shortly.</p>
+            </div>
+
+            <!-- Info Card -->
+            <div class="rounded-xl border border-slate-200 bg-white p-8 shadow-sm max-w-xl mx-auto">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-center gap-3 pb-4 border-b border-slate-200">
+                        <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                        <h3 class="text-lg font-semibold text-slate-900">What's Next?</h3>
+                    </div>
+
+                    <div class="space-y-3 text-left">
+                        <div class="flex gap-3">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-xs font-medium text-slate-600">1</div>
+                            <p class="text-sm text-slate-600 flex-1">Our design team will review your estimate within 24 hours</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-xs font-medium text-slate-600">2</div>
+                            <p class="text-sm text-slate-600 flex-1">A KOLSS specialist will contact you to discuss details</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-slate-100 flex items-center justify-center text-xs font-medium text-slate-600">3</div>
+                            <p class="text-sm text-slate-600 flex-1">We'll provide a final quote and design consultation</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-200">
+                        <div class="rounded-lg bg-slate-50 p-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm text-slate-600">Your estimated total</span>
+                                <span class="text-xl font-bold text-slate-900">5,175 EUR</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                <button class="inline-flex items-center justify-center rounded-md text-sm font-medium border border-slate-200 bg-white hover:bg-slate-100 h-11 px-8 py-2">
+                    Calculate Again
+                </button>
+                <button class="inline-flex items-center justify-center rounded-md text-sm font-medium bg-slate-900 text-white hover:bg-slate-900/90 h-11 px-8 py-2">
+                    Go to kolss.eu
+                </button>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="pt-8 border-t border-slate-200 max-w-xl mx-auto">
+                <p class="text-sm text-slate-500">
+                    Questions? Contact us at
+                    <a href="mailto:info@kolss.eu" class="font-medium text-slate-900 hover:underline">info@kolss.eu</a>
+                    or call
+                    <a href="tel:+48123456789" class="font-medium text-slate-900 hover:underline">+48 123 456 789</a>
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm text-slate-500">© 2024 KOLSS Premium Kitchen Furniture. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
