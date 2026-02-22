@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Turnstile } from "@marsidev/react-turnstile";
 import { useEstimator } from "./estimator-root";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
@@ -44,6 +45,7 @@ const DEFAULT_VALUES: EstimatorFormValues = {
 export function Step6Contact() {
   const { dispatch } = useEstimator();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string>("");
 
   const form = useForm<EstimatorFormValues>({
     resolver: zodResolver(estimatorContactSchema),
@@ -67,7 +69,7 @@ export function Step6Contact() {
   const onSubmit = async (data: EstimatorFormValues) => {
     setIsSubmitting(true);
     try {
-      const result = await submitEstimatorLead(data);
+      const result = await submitEstimatorLead(data, turnstileToken);
       if (result.success) {
         toast.success(result.message);
         if (result.warnings?.length) {
@@ -241,6 +243,16 @@ export function Step6Contact() {
               </FormItem>
             )}
           />
+
+          {process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && (
+            <div className="flex justify-center">
+              <Turnstile
+                siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+                onSuccess={(token) => setTurnstileToken(token)}
+                options={{ theme: "auto" }}
+              />
+            </div>
+          )}
 
           <Button
             type="submit"

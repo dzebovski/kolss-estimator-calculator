@@ -34,6 +34,10 @@ const envSchema = z
       .optional()
       .or(z.literal("")),
 
+    // Cloudflare Turnstile (optional)
+    NEXT_PUBLIC_TURNSTILE_SITE_KEY: z.string().optional(),
+    TURNSTILE_SECRET_KEY: z.string().optional(),
+
     // Node environment
     NODE_ENV: z.enum(["development", "production", "test"]).optional(),
   })

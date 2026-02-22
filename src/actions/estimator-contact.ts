@@ -1,5 +1,6 @@
 "use server";
 
+import { headers } from "next/headers";
 import { getIntegrationStatus } from "@/lib/config/env.validation";
 import {
   estimatorContactSchema,
@@ -35,7 +36,69 @@ const MESSAGES = {
     `Failed to deliver notification to: ${integrations}`,
   warningNoIntegrations:
     "No integrations are configured; the lead was saved to the database only.",
+  rateLimited:
+    "You have submitted too many requests. Please try again in a minute.",
+  captchaFailed:
+    "Security check failed. Please refresh the page and try again.",
 } as const;
+
+// In-memory rate limiter (per Vercel function instance)
+// Clears naturally as lambda instances die, but we also clean it up manually
+const rateLimitMap = new Map<string, { count: number; timestamp: number }>();
+const RATE_LIMIT_MAX_REQUESTS = 10;
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+
+function checkRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const userRecord = rateLimitMap.get(ip);
+
+  if (!userRecord) {
+    rateLimitMap.set(ip, { count: 1, timestamp: now });
+    return true;
+  }
+
+  if (now - userRecord.timestamp > RATE_LIMIT_WINDOW_MS) {
+    // Reset window
+    rateLimitMap.set(ip, { count: 1, timestamp: now });
+    return true;
+  }
+
+  if (userRecord.count >= RATE_LIMIT_MAX_REQUESTS) {
+    return false;
+  }
+
+  userRecord.count += 1;
+  return true;
+}
+
+async function verifyTurnstileToken(token: string): Promise<boolean> {
+  const secretKey = process.env.TURNSTILE_SECRET_KEY;
+  if (!secretKey) {
+    console.warn(
+      "TURNSTILE_SECRET_KEY is not set. Skipping CAPTCHA verification."
+    );
+    return true; // Skip verification if not configured yet (useful for initial setup)
+  }
+
+  try {
+    const res = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `secret=${encodeURIComponent(secretKey)}&response=${encodeURIComponent(token)}`,
+      }
+    );
+
+    const data = await res.json();
+    return data.success === true;
+  } catch (error) {
+    console.error("Turnstile verification error:", error);
+    return false;
+  }
+}
 
 function mapToLeadPayload(data: EstimatorFormValues) {
   const messageParts = [data.city, data.country, data.comment].filter(
@@ -53,9 +116,42 @@ function mapToLeadPayload(data: EstimatorFormValues) {
 }
 
 export async function submitEstimatorLead(
-  data: EstimatorFormValues
+  data: EstimatorFormValues,
+  turnstileToken?: string
 ): Promise<EstimatorContactActionState> {
   try {
+    // 1. Rate Limiting Check
+    const headersList = await headers();
+    // Vercel populates x-forwarded-for with the client's real IP
+    const ip = headersList.get("x-forwarded-for") || "unknown-ip";
+
+    if (!checkRateLimit(ip)) {
+      console.warn(`[estimator-contact] Rate limited IP: ${ip}`);
+      return {
+        success: false,
+        message: MESSAGES.rateLimited,
+      };
+    }
+
+    // 2. Turnstile CAPTCHA Check
+    if (process.env.TURNSTILE_SECRET_KEY) {
+      if (!turnstileToken) {
+        return {
+          success: false,
+          message: MESSAGES.captchaFailed,
+        };
+      }
+
+      const isCaptchaValid = await verifyTurnstileToken(turnstileToken);
+      if (!isCaptchaValid) {
+        return {
+          success: false,
+          message: MESSAGES.captchaFailed,
+        };
+      }
+    }
+
+    // 3. Validation
     const validated = estimatorContactSchema.safeParse(data);
 
     if (!validated.success) {
