@@ -17,7 +17,7 @@ import {
 } from "@/lib/estimator/pricing";
 import {
   LAYOUT_PRICING,
-  FACADE_MATERIALS,
+  getFacadeDisplayLabel,
   HANDLE_STYLES,
   COUNTERTOP_MATERIALS,
   ADDITIONAL_SERVICES,
@@ -46,11 +46,8 @@ export function Step5Summary() {
 
   const format = (eur: number) => formatCurrency(eur, state.currency);
 
-  const getFacadeName = () => {
-    return (
-      FACADE_MATERIALS.find((m) => m.id === state.facadeMaterialId)?.name ||
-      "Unknown Material"
-    );
+  const getFacadeDisplayName = () => {
+    return getFacadeDisplayLabel(state.facadeMaterialId) || "Unknown Material";
   };
   const getCountertopName = () => {
     return (
@@ -113,7 +110,7 @@ export function Step5Summary() {
               <div className="space-y-3">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-foreground">
-                    Facade: {getFacadeName()}
+                    Facade: {getFacadeDisplayName()}
                   </span>
                   <span className="font-medium">+{format(facadePriceEur)}</span>
                 </div>

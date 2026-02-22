@@ -83,6 +83,15 @@ export const FACADE_SERIES_LABELS: Record<FacadeSeries, string> = {
   prestige: "Prestige Series",
 };
 
+/** Human-readable facade label for summary/notifications: "Light: Solid Wood" or "Prestige: PB Veneer" */
+export function getFacadeDisplayLabel(materialId: string | undefined): string {
+  if (!materialId) return "—";
+  const material = FACADE_MATERIALS.find((m) => m.id === materialId);
+  if (!material) return materialId;
+  const seriesLabel = FACADE_SERIES_LABELS[material.series];
+  return `${seriesLabel}: ${material.name}`;
+}
+
 export const FACADE_MATERIALS: FacadeMaterial[] = [
   // Light Series
   {

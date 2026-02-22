@@ -1,7 +1,7 @@
 import {
   SIZE_BRACKETS,
   LAYOUT_PRICING,
-  FACADE_MATERIALS,
+  getFacadeDisplayLabel,
   HANDLE_STYLES,
   COUNTERTOP_MATERIALS,
   ADDITIONAL_SERVICES,
@@ -17,10 +17,7 @@ import type { EstimatorState } from "./types";
 export function formatEstimatorSummary(state: EstimatorState): string {
   const sizeLabel = SIZE_BRACKETS[state.sizeTier]?.label ?? state.sizeTier;
   const layoutLabel = LAYOUT_PRICING[state.layout]?.label ?? state.layout;
-  const facadeName =
-    FACADE_MATERIALS.find((m) => m.id === state.facadeMaterialId)?.name ??
-    state.facadeMaterialId ??
-    "—";
+  const facadeName = getFacadeDisplayLabel(state.facadeMaterialId);
   const handleLabel =
     state.handleStyle && HANDLE_STYLES[state.handleStyle]
       ? HANDLE_STYLES[state.handleStyle].label
