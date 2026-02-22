@@ -58,6 +58,17 @@ export async function sendToSlack(
               text: `*Файл*\n${context.fileUrl ? `<${context.fileUrl}|Відкрити файл>` : "—"}`,
             },
           },
+          ...(context.estimatorSummary?.trim()
+            ? [
+                {
+                  type: "section",
+                  text: {
+                    type: "mrkdwn",
+                    text: `*Калькулятор*\n\`\`\`${context.estimatorSummary.replace(/`/g, "`\u200b")}\`\`\``,
+                  },
+                },
+              ]
+            : []),
         ],
       }),
     });

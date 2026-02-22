@@ -94,11 +94,15 @@ export async function sendToPipedrive(
       throw new Error("Pipedrive lead created without ID");
     }
 
-    const noteContent = [
+    const noteLines = [
       `Повідомлення: ${message}`,
       `Бюджет: ${budget}`,
       `Файл: ${context.fileUrl || "—"}`,
-    ].join("\n");
+    ];
+    if (context.estimatorSummary?.trim()) {
+      noteLines.push("", "Калькулятор:", context.estimatorSummary);
+    }
+    const noteContent = noteLines.join("\n");
 
     console.log("[pipedrive.service] note create start");
     const noteResponse = await fetch(noteUrl, {

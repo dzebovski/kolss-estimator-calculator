@@ -10,11 +10,15 @@ function toError(error: unknown, fallbackMessage: string) {
   return new Error(fallbackMessage);
 }
 
-function buildMessage(payload: LeadPayload, fileUrl: string | null) {
+function buildMessage(
+  payload: LeadPayload,
+  fileUrl: string | null,
+  estimatorSummary?: string | null
+) {
   const message = payload.message ?? "";
   const budget = payload.budget ?? "—";
   const preferredContact = payload.preferredContact ?? "phone";
-  return [
+  const lines = [
     "Нова заявка з сайту",
     `Імʼя: ${payload.name}`,
     `Телефон: ${payload.phone}`,
@@ -23,7 +27,11 @@ function buildMessage(payload: LeadPayload, fileUrl: string | null) {
     `Канал звʼязку: ${preferredContact}`,
     `Повідомлення: ${message}`,
     `Файл: ${fileUrl || "—"}`,
-  ].join("\n");
+  ];
+  if (estimatorSummary?.trim()) {
+    lines.push("", estimatorSummary);
+  }
+  return lines.join("\n");
 }
 
 export async function sendToTelegram(
@@ -47,7 +55,11 @@ export async function sendToTelegram(
         },
         body: JSON.stringify({
           chat_id: chatId,
-          text: buildMessage(payload, context.fileUrl),
+          text: buildMessage(
+            payload,
+            context.fileUrl,
+            context.estimatorSummary
+          ),
         }),
       }
     );

@@ -43,7 +43,7 @@ const DEFAULT_VALUES: EstimatorFormValues = {
 };
 
 export function Step6Contact() {
-  const { dispatch } = useEstimator();
+  const { dispatch, state } = useEstimator();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string>("");
 
@@ -69,7 +69,7 @@ export function Step6Contact() {
   const onSubmit = async (data: EstimatorFormValues) => {
     setIsSubmitting(true);
     try {
-      const result = await submitEstimatorLead(data, turnstileToken);
+      const result = await submitEstimatorLead(data, turnstileToken, state);
       if (result.success) {
         toast.success(result.message);
         if (result.warnings?.length) {

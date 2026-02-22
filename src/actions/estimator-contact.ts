@@ -6,6 +6,8 @@ import {
   estimatorContactSchema,
   type EstimatorFormValues,
 } from "@/lib/validation/estimator-contact";
+import { formatEstimatorSummary } from "@/lib/estimator/format-summary";
+import type { EstimatorState } from "@/lib/estimator/types";
 import { saveLeadToDatabase } from "@/services/db/leads.service";
 import { sendToPipedrive } from "@/services/integrations/pipedrive.service";
 import { sendToSlack } from "@/services/integrations/slack.service";
@@ -117,7 +119,8 @@ function mapToLeadPayload(data: EstimatorFormValues) {
 
 export async function submitEstimatorLead(
   data: EstimatorFormValues,
-  turnstileToken?: string
+  turnstileToken?: string,
+  estimatorState?: EstimatorState | null
 ): Promise<EstimatorContactActionState> {
   try {
     // 1. Rate Limiting Check
@@ -167,7 +170,12 @@ export async function submitEstimatorLead(
     }
 
     const payload = mapToLeadPayload(validated.data);
-    const context: IntegrationContext = { fileUrl: null };
+    const estimatorSummary =
+      estimatorState != null ? formatEstimatorSummary(estimatorState) : null;
+    const context: IntegrationContext = {
+      fileUrl: null,
+      estimatorSummary: estimatorSummary ?? null,
+    };
 
     // When ENABLE_LEAD_INTEGRATIONS=telegram only Telegram runs (CRM, Slack, DB skipped until re-enabled)
     const integrationMode =
