@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useEstimator } from "./estimator-root";
+import { HIDE_PRICES } from "@/lib/estimator/config";
 import { clearContactFormDraft } from "@/lib/estimator/contact-form-draft";
 import { formatCurrency } from "@/lib/estimator/currency";
 import { calculateTotalEur, calculateTotalPln } from "@/lib/estimator/pricing";
@@ -40,20 +41,22 @@ export function Step7ThankYou() {
         </p>
       </div>
 
-      {/* Summary Card */}
-      <Card className="border-border bg-muted/20 inline-block w-full max-w-md text-left shadow-sm">
-        <CardContent className="p-6">
-          <p className="text-muted-foreground mb-2 text-center text-sm font-semibold tracking-wide uppercase">
-            Your Initial Estimate
-          </p>
-          <div className="text-foreground mb-1 text-center text-4xl font-black">
-            {formatCurrency(totalEur, "EUR")}
-          </div>
-          <p className="text-muted-foreground text-center text-sm">
-            ~ {formatCurrency(totalPln, "PLN")}
-          </p>
-        </CardContent>
-      </Card>
+      {/* Summary Card — hidden when prices are not shown */}
+      {!HIDE_PRICES && (
+        <Card className="border-border bg-muted/20 inline-block w-full max-w-md text-left shadow-sm">
+          <CardContent className="p-6">
+            <p className="text-muted-foreground mb-2 text-center text-sm font-semibold tracking-wide uppercase">
+              Your Initial Estimate
+            </p>
+            <div className="text-foreground mb-1 text-center text-4xl font-black">
+              {formatCurrency(totalEur, "EUR")}
+            </div>
+            <p className="text-muted-foreground text-center text-sm">
+              ~ {formatCurrency(totalPln, "PLN")}
+            </p>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Next Steps List */}
       <div className="bg-muted/30 mx-auto mt-8 max-w-lg rounded-xl border p-6 text-left md:p-8">
@@ -109,8 +112,12 @@ export function Step7ThankYou() {
 
       <p className="text-muted-foreground mt-8 text-sm">
         Need immediate assistance? Contact us at{" "}
-        <a href="mailto:info@kolss.eu" className="font-semibold underline">
-          info@kolss.eu
+        <a href="mailto:biuro@kolss.eu" className="font-semibold underline">
+          biuro@kolss.eu
+        </a>{" "}
+        or{" "}
+        <a href="tel:+48510700913" className="font-semibold underline">
+          +48 510 700 913
         </a>
       </p>
     </div>

@@ -12,7 +12,12 @@ import {
   EstimatorAction,
   KitchenSizeTier,
 } from "@/lib/estimator/types";
-import { INITIAL_STATE, SIZE_BRACKETS } from "@/lib/estimator/config";
+import {
+  INITIAL_STATE,
+  SIZE_BRACKETS,
+  HIDE_PRICES,
+  HIDE_STEP_4,
+} from "@/lib/estimator/config";
 
 // Combine actions
 type RootAction =
@@ -28,10 +33,20 @@ function estimatorReducer(
       return action.payload;
     case "SET_STEP":
       return { ...state, currentStep: action.payload };
-    case "NEXT_STEP":
-      return { ...state, currentStep: Math.min(state.currentStep + 1, 7) };
-    case "PREV_STEP":
-      return { ...state, currentStep: Math.max(state.currentStep - 1, 1) };
+    case "NEXT_STEP": {
+      let next = state.currentStep + 1;
+      if (HIDE_STEP_4 && next === 4) next = 6;
+      else if (HIDE_PRICES && next === 5) next = 6;
+      return { ...state, currentStep: Math.min(next, 7) };
+    }
+    case "PREV_STEP": {
+      const prev = state.currentStep - 1;
+      let step = prev;
+      if (HIDE_STEP_4 && (prev === 4 || prev === 5)) step = 3;
+      else if (HIDE_PRICES && prev === 5) step = 4;
+      else step = prev;
+      return { ...state, currentStep: Math.max(step, 1) };
+    }
     case "SET_CURRENCY":
       return { ...state, currency: action.payload };
 

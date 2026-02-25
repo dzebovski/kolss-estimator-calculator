@@ -8,6 +8,12 @@ import {
   AdditionalService,
 } from "./types";
 
+/** When true, hide all price UI and summary step so it can be restored by flipping to false. */
+export const HIDE_PRICES = true;
+
+/** When true, skip step 4 (Additional Services & Assembly) so it can be restored later. */
+export const HIDE_STEP_4 = true;
+
 // Base conversion rate
 export const EXCHANGE_RATE_EUR_TO_PLN = 4.3;
 

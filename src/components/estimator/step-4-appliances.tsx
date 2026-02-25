@@ -5,10 +5,10 @@ import { useEstimator } from "./estimator-root";
 import { OptionCard } from "./option-card";
 import {
   ADDITIONAL_SERVICES,
+  HIDE_PRICES,
   ASSEMBLY_PRICE_PER_SQM_EUR,
 } from "@/lib/estimator/config";
 import { formatCurrency } from "@/lib/estimator/currency";
-import { calculateAssemblyPriceEur } from "@/lib/estimator/pricing";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -50,7 +50,11 @@ export function Step4Appliances() {
               id={service.id}
               title={service.name}
               description={service.description}
-              priceDelta={`+${formatCurrency(service.priceEur, state.currency)}`}
+              priceDelta={
+                !HIDE_PRICES
+                  ? `+${formatCurrency(service.priceEur, state.currency)}`
+                  : undefined
+              }
               selected={(state.services || []).includes(service.id)}
               onSelect={() => handleServiceToggle(service.id)}
             />
@@ -72,11 +76,14 @@ export function Step4Appliances() {
           </Label>
           <p className="text-muted-foreground pointer-events-none text-sm">
             Professional installation of furniture and worktops by our experts.
-            Price depends on kitchen size ({state.floorArea.toFixed(1)} m²).
+            {!HIDE_PRICES &&
+              ` Price depends on kitchen size (${state.floorArea.toFixed(1)} m²).`}
           </p>
-          <p className="text-primary pointer-events-none mt-2 font-bold">
-            +{formatCurrency(totalAssemblyPriceEur, state.currency)}
-          </p>
+          {!HIDE_PRICES && (
+            <p className="text-primary pointer-events-none mt-2 font-bold">
+              +{formatCurrency(totalAssemblyPriceEur, state.currency)}
+            </p>
+          )}
         </div>
         <Switch
           id="assembly-toggle"

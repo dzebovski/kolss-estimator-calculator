@@ -7,6 +7,7 @@ import {
   FACADE_MATERIALS,
   HANDLE_STYLES,
   FACADE_SERIES_LABELS,
+  HIDE_PRICES,
 } from "@/lib/estimator/config";
 import { FacadeSeries, HandleStyle } from "@/lib/estimator/types";
 import { formatCurrency } from "@/lib/estimator/currency";
@@ -51,8 +52,9 @@ export function Step2FacadeStyle() {
           1. Facade Material
         </h2>
         <p className="text-muted-foreground mb-6 text-sm">
-          Select a finish series and material for your kitchen cabinets. Price
-          depends on kitchen size ({state.floorArea.toFixed(1)} m²).
+          {HIDE_PRICES
+            ? "Select a finish series and material for your kitchen cabinets."
+            : `Select a finish series and material for your kitchen cabinets. Price depends on kitchen size (${state.floorArea.toFixed(1)} m²).`}
         </p>
 
         <Tabs
@@ -79,7 +81,11 @@ export function Step2FacadeStyle() {
                   id={material.id}
                   title={material.name}
                   description={material.description}
-                  priceDelta={`+${formatCurrency(totalMaterialPrice, state.currency)}`}
+                  priceDelta={
+                    !HIDE_PRICES
+                      ? `+${formatCurrency(totalMaterialPrice, state.currency)}`
+                      : undefined
+                  }
                   selected={state.facadeMaterialId === material.id}
                   onSelect={() => handleMaterialSelect(material.id)}
                 />
@@ -107,9 +113,11 @@ export function Step2FacadeStyle() {
               title={config.label}
               description={config.description}
               priceDelta={
-                config.priceEur > 0
-                  ? `+${formatCurrency(config.priceEur, state.currency)}`
-                  : "Included"
+                !HIDE_PRICES
+                  ? config.priceEur > 0
+                    ? `+${formatCurrency(config.priceEur, state.currency)}`
+                    : "Included"
+                  : undefined
               }
               selected={state.handleStyle === style}
               onSelect={() => handleHandleStyleSelect(style)}

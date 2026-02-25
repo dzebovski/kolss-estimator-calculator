@@ -1,14 +1,13 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React from "react";
 import { useEstimator } from "./estimator-root";
 import { OptionCard } from "./option-card";
 import {
   SIZE_BRACKETS,
   LAYOUT_PRICING,
+  HIDE_PRICES,
   SIZE_SLIDER_CONFIG,
-  SLIDER_STEP_SQM,
-  BASE_PRICE_PER_STEP_EUR,
   ISLAND_PRICE_EUR,
 } from "@/lib/estimator/config";
 import { KitchenLayout, KitchenSizeTier } from "@/lib/estimator/types";
@@ -48,9 +47,13 @@ export function Step1SizeLayout() {
           1. Kitchen Size
         </h2>
         <p className="text-muted-foreground mb-6 text-sm">
-          Select an approximate size or use the slider for an exact measurement.
+          {HIDE_PRICES
+            ? "Select an approximate size for your kitchen."
+            : "Select an approximate size or use the slider for an exact measurement."}
         </p>
-        <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div
+          className={`grid grid-cols-1 gap-4 md:grid-cols-3 ${!HIDE_PRICES ? "mb-8" : ""}`}
+        >
           {(
             Object.entries(SIZE_BRACKETS) as [
               KitchenSizeTier,
@@ -58,23 +61,19 @@ export function Step1SizeLayout() {
             ][]
           ).map(([tier, config]) => {
             const isSelected = state.sizeTier === tier;
-            // Active card shows exact base price based on slider.
-            // Inactive cards show their "From X EUR" base min price.
             const displayPrice = isSelected
               ? calculateBasePriceEur(state.floorArea)
               : calculateBasePriceEur(config.min);
-
             const priceLabel = isSelected
               ? formatCurrency(displayPrice, state.currency)
               : `From ${formatCurrency(displayPrice, state.currency)}`;
-
             return (
               <OptionCard
                 key={tier}
                 id={tier}
                 title={config.label}
                 description={config.description}
-                priceDelta={priceLabel}
+                priceDelta={!HIDE_PRICES ? priceLabel : undefined}
                 selected={isSelected}
                 onSelect={() => handleSizeTierSelect(tier)}
               />
@@ -82,27 +81,28 @@ export function Step1SizeLayout() {
           })}
         </div>
 
-        {/* Slider Area */}
-        <div className="px-2">
-          <div className="mb-6 flex items-center justify-between">
-            <Label className="text-base font-medium">Floor Area</Label>
-            <div className="text-primary text-xl font-bold">
-              {state.floorArea.toFixed(1)} m²
+        {!HIDE_PRICES && (
+          <div className="px-2">
+            <div className="mb-6 flex items-center justify-between">
+              <Label className="text-base font-medium">Floor Area</Label>
+              <div className="text-primary text-xl font-bold">
+                {state.floorArea.toFixed(1)} m²
+              </div>
+            </div>
+            <Slider
+              min={SIZE_SLIDER_CONFIG.min}
+              max={SIZE_SLIDER_CONFIG.max}
+              step={SIZE_SLIDER_CONFIG.step}
+              value={[state.floorArea]}
+              onValueChange={handleSliderChange}
+              className="mb-6"
+            />
+            <div className="text-muted-foreground flex justify-between px-1 text-xs font-medium">
+              <span>{SIZE_SLIDER_CONFIG.min.toFixed(1)} m²</span>
+              <span>{SIZE_SLIDER_CONFIG.max.toFixed(1)} m²</span>
             </div>
           </div>
-          <Slider
-            min={SIZE_SLIDER_CONFIG.min}
-            max={SIZE_SLIDER_CONFIG.max}
-            step={SIZE_SLIDER_CONFIG.step}
-            value={[state.floorArea]}
-            onValueChange={handleSliderChange}
-            className="mb-6"
-          />
-          <div className="text-muted-foreground flex justify-between px-1 text-xs font-medium">
-            <span>{SIZE_SLIDER_CONFIG.min.toFixed(1)} m²</span>
-            <span>{SIZE_SLIDER_CONFIG.max.toFixed(1)} m²</span>
-          </div>
-        </div>
+        )}
       </section>
 
       {/* 2. Layout */}
@@ -123,9 +123,11 @@ export function Step1SizeLayout() {
               title={config.label}
               image={config.image}
               priceDelta={
-                config.priceEur > 0
-                  ? `+${formatCurrency(config.priceEur, state.currency)}`
-                  : "Included"
+                !HIDE_PRICES
+                  ? config.priceEur > 0
+                    ? `+${formatCurrency(config.priceEur, state.currency)}`
+                    : "Included"
+                  : undefined
               }
               selected={state.layout === layout}
               onSelect={() => handleLayoutSelect(layout)}
@@ -149,9 +151,11 @@ export function Step1SizeLayout() {
           <p className="text-muted-foreground pointer-events-none text-sm">
             A central island adds extra workspace and storage.
           </p>
-          <p className="text-primary pointer-events-none mt-2 font-bold">
-            +{formatCurrency(ISLAND_PRICE_EUR, state.currency)}
-          </p>
+          {!HIDE_PRICES && (
+            <p className="text-primary pointer-events-none mt-2 font-bold">
+              +{formatCurrency(ISLAND_PRICE_EUR, state.currency)}
+            </p>
+          )}
         </div>
         <Switch
           id="island-toggle"

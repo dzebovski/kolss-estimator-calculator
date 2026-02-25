@@ -3,7 +3,7 @@
 import React from "react";
 import { useEstimator } from "./estimator-root";
 import { OptionCard } from "./option-card";
-import { COUNTERTOP_MATERIALS } from "@/lib/estimator/config";
+import { COUNTERTOP_MATERIALS, HIDE_PRICES } from "@/lib/estimator/config";
 import { formatCurrency } from "@/lib/estimator/currency";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Info } from "lucide-react";
@@ -22,8 +22,9 @@ export function Step3Countertop() {
           Countertop Material
         </h2>
         <p className="text-muted-foreground mb-6 text-sm">
-          Select a countertop material. The final price depends on your kitchen
-          size ({state.floorArea.toFixed(1)} m²).
+          {HIDE_PRICES
+            ? "Select a countertop material for your kitchen."
+            : `Select a countertop material. The final price depends on your kitchen size (${state.floorArea.toFixed(1)} m²).`}
         </p>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -35,7 +36,11 @@ export function Step3Countertop() {
                 id={material.id}
                 title={material.name}
                 description={material.description}
-                priceDelta={`+${formatCurrency(totalPrice, state.currency)}`}
+                priceDelta={
+                  !HIDE_PRICES
+                    ? `+${formatCurrency(totalPrice, state.currency)}`
+                    : undefined
+                }
                 selected={state.countertopId === material.id}
                 onSelect={() => handleCountertopSelect(material.id)}
               />

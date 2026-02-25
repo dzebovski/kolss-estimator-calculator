@@ -2,6 +2,7 @@
 
 import React, { useEffect } from "react";
 import { useEstimator } from "./estimator-root";
+import { HIDE_PRICES, HIDE_STEP_4 } from "@/lib/estimator/config";
 import { EstimatorHeader } from "./estimator-header";
 import { EstimatorFooter } from "./estimator-footer";
 import { Step1SizeLayout } from "./step-1-size-layout";
@@ -30,8 +31,8 @@ export function EstimatorCalculator() {
           {state.currentStep === 1 && <Step1SizeLayout />}
           {state.currentStep === 2 && <Step2FacadeStyle />}
           {state.currentStep === 3 && <Step3Countertop />}
-          {state.currentStep === 4 && <Step4Appliances />}
-          {state.currentStep === 5 && <Step5Summary />}
+          {state.currentStep === 4 && !HIDE_STEP_4 && <Step4Appliances />}
+          {state.currentStep === 5 && !HIDE_PRICES && <Step5Summary />}
           {state.currentStep === 6 && <Step6Contact />}
           {state.currentStep === 7 && <Step7ThankYou />}
         </div>
